@@ -7,3 +7,4 @@ while opcao != 0 or isPrimeiraExecucao:
     isPrimeiraExecucao = False
     opcao = metodos.printarMenu()
     print("O programa foi encerrado!!!")
+    print("teste")
