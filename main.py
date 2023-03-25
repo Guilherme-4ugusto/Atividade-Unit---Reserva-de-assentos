@@ -6,4 +6,7 @@ isPrimeiraExecucao = True
 while opcao != 0 or isPrimeiraExecucao:
     isPrimeiraExecucao = False
     opcao = metodos.printarMenu()
-print("ola")
+    if opcao == 1:
+        cadastro = metodos.cadastrar_clientes()
+    elif opcao == 2:
+        consulta = metodos.consultar_cliente()
