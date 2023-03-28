@@ -3,3 +3,4 @@ def printarMenu():
     print("Opção 2:")
     print("Opção 3:")
     return int(input("Informe uma opção:"))
+#Igor Passou por aqui
