@@ -1,4 +1,5 @@
 import metodos
+open("clientes.txt","a")
 
 while True:
     opcao = metodos.printarMenu()
@@ -9,13 +10,13 @@ while True:
     elif opcao == 2:
         metodos.consultar_cliente()
     elif opcao == 3:
-        print("Ainda não suportado")
+        metodos.reserva_assento()
     elif opcao == 4:
         print("Ainda não suportado")
     elif opcao == 5:
         metodos.relatorio_reservas()
     elif opcao == 6:
-        print("Ainda não suportado")
+        metodos.relatorio_de_assentos_livres()
     elif opcao == 7:
         metodos.exibirRelatorioDeCancelamentosDeReservasDeAssentos()
 print("O programa foi encerrado!!!")
