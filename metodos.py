@@ -14,22 +14,29 @@ def printarMenu():
 
 
 def exibirRelatorioDeCancelamentosDeReservasDeAssentos():
-    with open("reservas_canceladas", 'r', encoding="utf8") as arq:
-        for linha in arq.readlines():
-
-            print(linha.split()[1])
-    arq.close()
-
+    print("\n=========================== Relatorio de reservas canceladas ===========================\n")
+    with open("reservas_canceladas.txt", 'r', encoding="utf8") as arq:
+        for linha in arq:
+            fila, assento, cpf_consulta = linha.strip().split("|")
+            with open("clientes.txt", "r") as arquivo:
+                for linha in arquivo:
+                    nome, cpf = linha.strip().split(",")
+                    if cpf == cpf_consulta:
+                        print(f"\tA reserva do assento {assento} da fila {fila} vinculado ao cliente {nome} foi cancelada.")
+    print("\n========================================================================================\n")
 
 def cadastrar_clientes():
   nome = input("Digite o nome do cliente: ")
   cpf = input("Digite o CPF do cliente: ")
-  with open ("cliente.txt", "a") as arquivo:
-      arquivo.write(nome+","+cpf+"\n")
-  print("Cliente cadastrado!!")
+  if not is_cliente_registrado(cpf):
+      with open("clientes.txt", "a") as arquivo:
+          arquivo.write(nome + "," + cpf + "\n")
+          print("Cliente cadastrado!!")
+  else:
+      print("Cliente ja registrado!!")
 
 def obter_nome_do_cliente_pelo_cpf(cpf):
-    with open("cliente.txt", "r") as arquivo:
+    with open("clientes.txt", "r") as arquivo:
         for linha in arquivo:
             nome, cpf_consulta = linha.strip().split(",")
             if cpf == cpf_consulta:
@@ -38,7 +45,7 @@ def obter_nome_do_cliente_pelo_cpf(cpf):
 def consultar_cliente():
     cpf_consulta = input("Digite o CPF do cliente que deseja consultar: ")
     encontrado = False
-    with open("cliente.txt", "r") as arquivo:
+    with open("clientes.txt", "r") as arquivo:
         for linha in arquivo:
             nome, cpf = linha.strip().split(",")
             if cpf == cpf_consulta:
@@ -66,7 +73,7 @@ def printar_relatorio_de_reservas(dadosReserva):
     print("\n======== Visão Detalhada ==============")
     for reserva in dadosReserva:
         fila, assento, cpf = reserva.strip().split('|')
-        print("O assento",int(assento)+1,"da fila",int(fila)+1,"pelo cliente",obter_nome_do_cliente_pelo_cpf(cpf))
+        print("O assento",int(assento)+1,"da fila",int(fila)+1,"está reservado pelo cliente",obter_nome_do_cliente_pelo_cpf(cpf))
 
 def criamatriz(fila, assento): #Cria matriz com todas as posições com o valor False
     matriz = []
@@ -93,3 +100,57 @@ def obterMatrizPreenchida(dadosReserva):
         fila, assento, cpf = reserva.strip().split('|')
         matriz[int(fila)][int(assento)] = "X"
     return matriz
+
+def relatorio_de_assentos_livres():
+    with open("reservas.txt", "r", encoding="utf8") as arquivo:
+        reservas = arquivo.readline()
+        dadosReservas = reservas.strip().split(",")
+    printar_relatorio_de_assentos_livres(dadosReservas)
+def printar_relatorio_de_assentos_livres(dadosReservas):
+    print("========= Relatorio de assentos livres =========")
+    print("\n======== Visão Geral ==================\n")
+    print(montaGuiaDaMatriz())
+    print_matriz(obterMatrizPreenchida(dadosReservas))
+    print("\nX = Reservados | O = Disponíveis")
+    print("=======================================")
+
+def reserva_assento():
+    cpf_consulta = input("Digite o CPF do cliente a qual a reserva vai ser realizada: ")
+    isClienteNaoEncontrado = True
+    with open("clientes.txt", "r") as arquivo:
+        for linha in arquivo:
+            nome, cpf = linha.strip().split(",")
+            if cpf == cpf_consulta:
+                isClienteNaoEncontrado = False
+                fila = int(input("Em qual fila?(1-"+str(FILAS_AVIAO)+") "))
+                assento = int(input("Qual assento?(1-"+str(COLUNAS_AVIAO)+") "))
+                with open("reservas.txt", "a") as arquivo:
+                    if existeRegistrosDeReservas():
+                        arquivo.write("," + str(fila-1) + "|" + str(assento-1) + "|" + cpf)
+                    else:
+                        arquivo.write(str(fila - 1) + "|" + str(assento - 1) + "|" + cpf)
+                    print("Reserva realizada!!")
+                break
+    if(isClienteNaoEncontrado == True):
+        print("Cliente não encontrado.")
+
+def existeRegistrosDeReservas():
+    with open("reservas.txt", "r") as arquivo:
+        if len(arquivo.readlines()) > 0:
+            return True
+        else:
+            return False
+
+def is_cliente_registrado(cpf):
+  cpf_consulta = cpf
+  encontrado = False
+  with open("clientes.txt","r")as arquivo:
+    for linha in arquivo:
+      nome, cpf = linha.strip().split(",")
+      if cpf == cpf_consulta:
+        encontrado = True
+        return encontrado
+        break
+      if not encontrado:
+        encontrado = False
+        return encontrado
