@@ -1,9 +1,21 @@
 import metodos
 
-opcao = 0;
-isPrimeiraExecucao = True
-
-while opcao != 0 or isPrimeiraExecucao:
-    isPrimeiraExecucao = False
+while True:
     opcao = metodos.printarMenu()
-    print("O programa foi encerrado!!!")
+    if opcao == 0:
+        break
+    elif opcao == 1:
+        print("Ainda não suportado")
+    elif opcao == 2:
+        print("Ainda não suportado")
+    elif opcao == 3:
+        print("Ainda não suportado")
+    elif opcao == 4:
+        print("Ainda não suportado")
+    elif opcao == 5:
+        print("Ainda não suportado")
+    elif opcao == 6:
+        print("Ainda não suportado")
+    elif opcao == 7:
+        metodos.exibirRelatorioDeCancelamentosDeReservasDeAssentos()
+print("O programa foi encerrado!!!")
