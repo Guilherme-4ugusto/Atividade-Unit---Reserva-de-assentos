@@ -5,15 +5,15 @@ while True:
     if opcao == 0:
         break
     elif opcao == 1:
-        print("Ainda não suportado")
+        metodos.cadastrar_clientes()
     elif opcao == 2:
-        print("Ainda não suportado")
+        metodos.consultar_cliente()
     elif opcao == 3:
         print("Ainda não suportado")
     elif opcao == 4:
         print("Ainda não suportado")
     elif opcao == 5:
-        print("Ainda não suportado")
+        metodos.relatorio_reservas()
     elif opcao == 6:
         print("Ainda não suportado")
     elif opcao == 7:
