@@ -19,3 +19,5 @@ while True:
     elif opcao == 7:
         metodos.exibirRelatorioDeCancelamentosDeReservasDeAssentos()
 print("O programa foi encerrado!!!")
+
+
