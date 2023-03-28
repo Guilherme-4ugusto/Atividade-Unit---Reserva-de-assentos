@@ -1,8 +1,3 @@
-def printarMenu():
-    print("Opção 1: Cadastrar Clientes ")
-    print("Opção 2: Culsutar clientes ")
-    print("Opção 3: Pressione 0 se deseja sair ")
-    return int(input("Informe uma opção: "))
 def cadastrar_clientes():
     nome = input("Digite o nome do cliente: ")
     cpf = input("Digite o CPF do cliente: ")
